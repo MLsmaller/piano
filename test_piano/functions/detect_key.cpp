@@ -5,8 +5,6 @@ using namespace std;
 using namespace cv;
 
 
-
-
 //-----找到离白键最近的那个黑键------
 int draw_box(double &white_loc,vector<Rect> &black_box){
     vector<double> diffs;

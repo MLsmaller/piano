@@ -8,20 +8,20 @@
 using namespace std;
 using namespace cv;
 
-string video_path = "/home/lj/cy/openpose/some_code/video_to_image/test2.mp4";
-string videoSavepath="/home/lj/cy/openpose/piano/test_piano/image/temp_dir/";
-string cropSavepath="/home/lj/cy/openpose/piano/test_piano/image/temp_crop/"; 
+string video_path = "/home/data/cy/projects/piano/video/video1_crop.mp4";
+string videoSavepath="/home/data/cy/projects/piano/frame/video1_whole_frame/";
+string cropSavepath="/home/data/cy/projects/piano/frame/video1_crop_frame/"; 
 
 string white_path = "/home/lj/cy/openpose/piano/test_piano/new_res/w_key/";
 
 int main(){
     //将视频转换为帧
     int frameTostop = 600;
-    bool flags = false;
+    bool flags = True;
     video_to_frame(video_path,videoSavepath,frameTostop,flags);
 
     Mat src,src_rgb, src_rgb1,base;
-    string img_extern = "/home/lj/cy/openpose/piano/test_piano/image/temp_dir/*.jpg";  //以jpg结尾的图片
+    string img_extern = "/home/data/cy/projects/piano/frame/video1_whole_frame/*.jpg";  //以jpg结尾的图片
     vector<string> fn;  
     glob(img_extern, fn, false);  //fn中存着图片的路径
     //首先找到一张能够检测到钢琴的帧(有些视频开头不包含钢琴),但是可能亮度不高
@@ -61,6 +61,8 @@ int main(){
             imwrite(buf_crop, crop_img);
         }
     }
+    //这次裁剪的视频由于前面剪切了比较多，没有考虑到需要一张钢琴背景图，先直接这样做，后面的话不能剪切那么多
+    //问一下有其他的声音有没有影响
     //按照第一次检测到钢琴图片的框进行图片裁剪(只包含钢琴)
     vector<string> fn_crop;  //也可以不存入路径,直接裁剪后进行后面的步骤
     string crop_path = cropSavepath + "*.jpg";
@@ -86,6 +88,38 @@ int main(){
 	for(vector<double>::iterator iter=white_loc.begin();iter<white_loc.end();iter++){
 		ori_white_loc.push_back(*iter+double(box.tl().x));
 	}
+
+/*     vector<double> x_loc;
+    vector<int> w_nums;
+    vector<int> b_nums;
+    for (int i = 0; i < white_loc.size();i++){
+        x_loc.push_back(white_loc[i]);
+    }
+    for (int i = 0; i < black_box.size();i++){
+        //cout << black_box[i].tl().x << endl;
+        x_loc.push_back(black_box[i].tl().x);
+
+    }
+    sort(x_loc.begin(), x_loc.end(), less<double>());
+    for (int i = 0; i < x_loc.size();i++){
+        string index = to_string(i+1);
+        vector<double>::iterator it;
+        it=find(white_loc.begin(),white_loc.end(),x_loc[i]);
+        if(it==white_loc.end()){
+            putText(test_img, index, Point2f(x_loc[i], 2.0 / 3 * b_height), FONT_HERSHEY_COMPLEX, 0.6, Scalar(0, 0, 255), 1);
+            b_nums.push_back(i + 1);
+        }
+        else{
+            putText(test_img, index, Point2f(x_loc[i], 2.0 / 3 * b_height+15), FONT_HERSHEY_COMPLEX, 0.5, Scalar(255, 0, 0), 1);
+            w_nums.push_back(i + 1);
+        }
+        //line(base_img,Point2f(x_loc[i],0),Point2f(x_loc[i],b_height),Scalar(0,0,255),1,CV_AA);
+        
+    }
+    for (int i = 0; i < b_nums.size();i++){
+        cout << b_nums[i] << endl;
+    }
+    imwrite("../draw_keys.jpg", test_img);  */
 
     vector<Rect> total_top;
     vector<Rect> total_bottom;

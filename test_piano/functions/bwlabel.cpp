@@ -14,7 +14,8 @@ void illumination(Mat &src,Mat &overlay,const int &stepsize){
 	int v;
 	int pixelSize = src.channels();    //每个像素多少个字节
 	int linesize = width * pixelSize;  //每一行需要这么多字节存储
-	vector<vector<int>>num(height,vector<int>(linesize,0));  //存放v
+	//-----以后定义双重vector的时候右边的>要分开来------
+	vector<vector<int> >num(height,vector<int>(linesize,0));  //存放v
 	for (int i = 0; i < height; i++)
 	{
 		uchar *data1=src.ptr<uchar>(i);

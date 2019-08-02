@@ -257,7 +257,7 @@ int find_base(Mat &img,const int &index,const vector<string> &fn,int &best_index
 	vector<Feather>featherlist;
 	int num,num1;
 	num = bwlabel(base, dst, featherlist);
-	//cout << "第一张背景图检测到的黑键数量为: "<<num << endl;
+	cout << "第一张背景图检测到的黑键数量为: "<<num << endl;
 	for (int i = index+1; i < fn.size();i++){
 		//-----为了加快运行速度,后面改回来
 		if (i>330){

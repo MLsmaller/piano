@@ -138,7 +138,7 @@ void video_to_frame(const string &video_path, const string &save_path, const int
             }
             */
             //结束条件
-            if(currentFrame>=frameTostop){
+            if(currentFrame>=totalFrameNumber){
                 flags = false;
             }
             currentFrame++;
