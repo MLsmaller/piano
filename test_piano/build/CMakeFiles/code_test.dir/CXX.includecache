@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../functions/headers/bwlabel.hpp
+opencv2/opencv.hpp
+-
+vector
+-
+
+/home/cy/projects/piano/test_piano/functions/bwlabel.cpp
+opencv2/opencv.hpp
+-
+bwlabel.hpp
+-
+string
+-
+iostream
+-
+vector
+-
+stack
+-
+
